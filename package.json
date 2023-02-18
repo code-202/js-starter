@@ -1,0 +1,37 @@
+{
+  "name": "js-starter",
+  "version": "1.2.0",
+  "main": "build/index.js",
+  "typings": "src/js/lib/index",
+  "repository": "git@github.com:code-202/js-starter.git",
+  "author": "jngermon <jn.germon@code202.fr>",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "dev": "concurrently -k -n \"Typescript,TSLint\" -p \"[{name}]\" -c \"blue,green\" \"tsc --watch\" \"esw --watch --ext=.ts,.tsx ./src\"",
+    "build-lib": "tsc",
+    "build-packages": "webpack",
+    "build": "yarn build-lib | yarn build-packages",
+    "test": "jest --verbose"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.52.0",
+    "@typescript-eslint/parser": "^5.52.0",
+    "bootstrap": "^5.2.3",
+    "clean-webpack-plugin": "^4.0.0",
+    "concurrently": "^7.6.0",
+    "css-loader": "^6.7.3",
+    "eslint": "^8.34.0",
+    "eslint-watch": "^8.0.0",
+    "mini-css-extract-plugin": "^2.7.2",
+    "sass": "^1.58.3",
+    "sass-loader": "^13.2.0",
+    "source-map-loader": "^4.0.1",
+    "ts-loader": "^9.4.2",
+    "typescript": "^4.9.5",
+    "watch": "^1.0.2",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
+  },
+  "resolutions": {}
+}
