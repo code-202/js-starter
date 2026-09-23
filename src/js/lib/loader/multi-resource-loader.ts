@@ -1,14 +1,14 @@
 import { ResourceLoader, ResourceLoaderStatus, ResourceLoaderUpdateCallback } from '.'
 
 export default class MultiResourceLoader implements ResourceLoader {
-    private _resourceLoaders: {[key: string]: ResourceLoader} = {}
+    private _resourceLoaders: { [key: string]: ResourceLoader } = {}
     private _nbResourceLoaders: number = 0
     private _listeners: ResourceLoaderUpdateCallback[] = []
 
     private _status: ResourceLoaderStatus = 'waiting'
     private _progress: number = 0
 
-    addResourceLoader (key: string, resourceLoader: ResourceLoader) {
+    addResourceLoader(key: string, resourceLoader: ResourceLoader) {
         if (!this._resourceLoaders[key]) {
             this._resourceLoaders[key] = resourceLoader
             resourceLoader.onUpdate((l: ResourceLoader) => {
@@ -20,45 +20,45 @@ export default class MultiResourceLoader implements ResourceLoader {
         this.refreshNbResourceLoaders()
     }
 
-    getResourceLoader (key: string): ResourceLoader | null {
+    getResourceLoader(key: string): ResourceLoader | null {
         if (this._resourceLoaders[key]) {
-            return this._resourceLoaders[key]
+            return this._resourceLoaders[key] as ResourceLoader
         }
 
         return null
     }
 
-    onUpdate (c: ResourceLoaderUpdateCallback) {
+    onUpdate(c: ResourceLoaderUpdateCallback) {
         this._listeners.push(c)
     }
 
-    get status (): ResourceLoaderStatus {
+    get status(): ResourceLoaderStatus {
         return this._status
     }
 
-    get progress (): number {
+    get progress(): number {
         return this._progress
     }
 
-    get responseData (): any {
-        const datas: {[key: string]: any} = {}
+    get responseData(): any {
+        const datas: { [key: string]: any } = {}
         for (const key in this._resourceLoaders) {
-            datas[key] = this._resourceLoaders[key].responseData
+            datas[key] = (this._resourceLoaders[key] as ResourceLoader).responseData
         }
 
         return datas
     }
 
-    abort (): void {
+    abort(): void {
         for (const key in this._resourceLoaders) {
-            this._resourceLoaders[key].abort()
+            (this._resourceLoaders[key] as ResourceLoader).abort()
         }
     }
 
-    load (): void {
+    load(): void {
         for (const key in this._resourceLoaders) {
-            if (this._resourceLoaders[key].status !== 'done') {
-                this._resourceLoaders[key].load()
+            if ((this._resourceLoaders[key] as ResourceLoader).status !== 'done') {
+                (this._resourceLoaders[key] as ResourceLoader).load()
             }
         }
 
@@ -68,19 +68,19 @@ export default class MultiResourceLoader implements ResourceLoader {
         }
     }
 
-    append (): void {
+    append(): void {
         for (const key in this._resourceLoaders) {
-            this._resourceLoaders[key].append()
+            (this._resourceLoaders[key] as ResourceLoader).append()
         }
     }
 
-    dispatch () {
+    dispatch() {
         for (const c of this._listeners) {
             c(this)
         }
     }
 
-    refreshStatus () {
+    refreshStatus() {
         const resourceLoadersByStatus = {
             'waiting': 0,
             'pending': 0,
@@ -90,7 +90,7 @@ export default class MultiResourceLoader implements ResourceLoader {
         }
 
         for (const key in this._resourceLoaders) {
-            resourceLoadersByStatus[this._resourceLoaders[key].status] ++
+            resourceLoadersByStatus[(this._resourceLoaders[key] as ResourceLoader).status]++
         }
 
         const prevStatus = this._status
@@ -112,7 +112,7 @@ export default class MultiResourceLoader implements ResourceLoader {
         }
     }
 
-    refreshProgress () {
+    refreshProgress() {
         const prevProgress = this._progress
 
         if (!this._nbResourceLoaders) {
@@ -120,7 +120,7 @@ export default class MultiResourceLoader implements ResourceLoader {
         } else {
             let progress = 0
             for (const key in this._resourceLoaders) {
-                progress += this._resourceLoaders[key].progress
+                progress += (this._resourceLoaders[key] as ResourceLoader).progress
             }
 
             this._progress = Math.round(progress / this._nbResourceLoaders)
@@ -131,7 +131,7 @@ export default class MultiResourceLoader implements ResourceLoader {
         }
     }
 
-    private refreshNbResourceLoaders () {
+    private refreshNbResourceLoaders() {
         this._nbResourceLoaders = 0
         for (const key in this._resourceLoaders) {
             this._nbResourceLoaders++

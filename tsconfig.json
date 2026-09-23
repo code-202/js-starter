@@ -1,14 +1,24 @@
 {
-  "include": [
-    "src/js/lib/**/*"
-  ],
-  "compilerOptions": {
-    "outDir": "build",
-    "target": "es6",
-    "module": "commonjs",
-    "esModuleInterop": true,
-    "strict": true,
-    "declaration": true
-  },
-  "exclude": ["node_modules"]
+    "compilerOptions": {
+        "rootDir": "./src",
+        "outDir": "./build",
+        "module": "commonjs",
+        "target": "esnext",
+        "types": [],
+        "sourceMap": true,
+        "declaration": true,
+        "declarationMap": true,
+        "noUncheckedIndexedAccess": true,
+        "exactOptionalPropertyTypes": false,
+        "strict": true,
+        "jsx": "react-jsx",
+        "verbatimModuleSyntax": false,
+        "isolatedModules": true,
+        "noUncheckedSideEffectImports": true,
+        "moduleDetection": "force",
+        "skipLibCheck": true,
+    },
+    "include": [
+        "src/**/*"
+    ]
 }

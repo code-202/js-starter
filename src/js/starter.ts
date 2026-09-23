@@ -1,4 +1,4 @@
-require('../css/starter.scss')
+import '../css/starter.scss'
 
 import ResourcesLoader from './lib/resources-loader'
 

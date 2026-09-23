@@ -11,7 +11,7 @@ export default class ResourcesLoader {
 
     public errorMessage: string | null = null
 
-    constructor (contentId?: string) {
+    constructor(contentId?: string) {
         this._loader = new MultiResourceLoader()
 
         if (contentId) {
@@ -53,9 +53,9 @@ export default class ResourcesLoader {
         this._element.appendChild(box)
     }
 
-    addResources (resources: {[key: string]: string}) {
+    addResources(resources: { [key: string]: string }) {
         for (const key in resources) {
-            const resource = resources[key]
+            const resource = resources[key] as string
             if (/\.js$/.test(resource)) {
                 this._loader.addResourceLoader(key, new JSLoader(resource, false, false))
             } else if (/\.css$/.test(resource)) {
@@ -68,7 +68,7 @@ export default class ResourcesLoader {
         this._loader.load()
     }
 
-    show () {
+    show() {
         if (this._elementInDom) {
             return
         }
@@ -81,7 +81,7 @@ export default class ResourcesLoader {
         this._elementInDom = true
     }
 
-    hide () {
+    hide() {
         if (!this._elementInDom) {
             return
         }
@@ -94,13 +94,13 @@ export default class ResourcesLoader {
         this._elementInDom = false
     }
 
-    done () {
+    done() {
         this._loader.append()
 
         this.hide()
     }
 
-    error () {
+    error() {
         if (this._errorShown) {
             return
         }
