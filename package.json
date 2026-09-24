@@ -1,8 +1,8 @@
 {
     "name": "@code-202/starter",
-    "version": "1.3.0",
-    "main": "build/index.js",
-    "typings": "src/js/lib/index",
+    "version": "1.3.1",
+    "main": "build/js/lib/index.js",
+    "typings": "build/js/lib/index",
     "repository": "git@github.com:code-202/js-starter.git",
     "author": "jngermon <jn.germon@code202.fr>",
     "license": "MIT",
